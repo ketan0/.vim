@@ -11,6 +11,7 @@ Plug 'chriskempson/base16-vim'
 "Utilities
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-surround'
+"Plug 'tpope/vim-fugitive'
 Plug 'jiangmiao/auto-pairs'
 
 
@@ -28,7 +29,10 @@ else
   Plug 'roxma/vim-hug-neovim-rpc'
 endif
 Plug 'w0rp/ale'
-
+"NOTE: to get this working on sherlock, you're going to have to monkey around
+"with some python config (i.e., deoplete needs python3 loaded, but some
+"linters for ale may need python2?)
+"
 "note: to look nice, install powerline fonts
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
@@ -36,7 +40,7 @@ Plug 'vim-airline/vim-airline-themes'
 Plug 'python-mode/python-mode'
 
 " Plug 'davidhalter/jedi-vim'
-"Plug 'Valloric/YouCompleteMe'
+" Plug 'Valloric/YouCompleteMe'
 call plug#end() "to install new plugins: save vimrc, source vimrc, and run :PlugInstall 
 
 "tab completion
@@ -44,8 +48,8 @@ inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 
 let g:ale_linters = {
-  \ 'python': ['flake8', 'pylint'] ,
-  \ }
+\   'python': ['flake8', 'pylint'] ,
+\}
 
 let g:ale_fixers = {
 \   'python': [
@@ -53,6 +57,7 @@ let g:ale_fixers = {
 \       'isort',
 \       'remove_trailing_lines',
 \       'trim_whitespace', 
+\       'yapf',
 \   ],
 \}
 
@@ -73,8 +78,8 @@ let g:airline#extensions#ale#enabled = 1
 let g:deoplete#enable_at_startup = 1
 
 let g:pymode_python = 'python'
-let g:pymode_lint = 0  " ALE
-let g:pymode_folding = 0  " SimplyFold
+let g:pymode_lint = 0  " ALE takes care of this
+let g:pymode_folding = 0  
 let g:pymode_run = 1
 let g:pymode_breakpoint = 0
 let g:pymode_options = 0
@@ -88,19 +93,19 @@ set t_Co=256
 set background=dark
 colorscheme molokai
 
-let g:PaperColor_Theme_Options = {
-  \   'language': {
-  \     'python': {
-  \       'highlight_builtins' : 1
-  \     },
-  \     'cpp': {
-  \       'highlight_standard_library': 1
-  \     },
-  \     'c': {
-  \       'highlight_builtins' : 1
-  \     }
-  \   }
-  \ }
+" let g:PaperColor_Theme_Options = {
+"   \   'language': {
+"   \     'python': {
+"   \       'highlight_builtins' : 1
+"   \     },
+"   \     'cpp': {
+"   \       'highlight_standard_library': 1
+"   \     },
+"   \     'c': {
+"   \       'highlight_builtins' : 1
+"   \     }
+"   \   }
+"   \ }
 
 "Spaces & Tabs
 set softtabstop=4
@@ -146,15 +151,18 @@ set mouse=a
 nnoremap j gj
 nnoremap k gk
 
+"easily switch between split windows
 map <C-h> <C-w>h
 map <C-j> <C-w>j
 map <C-k> <C-w>k
 map <C-l> <C-w>l
 
-inoremap jk <esc> "exit to normal mode w/ jk 
-inoremap <c-d> <esc>ddi "delete a line in insert mode
+"exit to normal mode w/ jk 
+inoremap jk <esc> 
+"delete a line in insert mode
+inoremap <c-d> <esc>ddi 
 
-"convenient remappings
+"convenience remappings
 nnoremap ; :
 nnoremap : ;
 vnoremap ; :
@@ -169,17 +177,11 @@ nnoremap <leader>ev :vsplit $MYVIMRC<CR>
 nnoremap <leader>sv :source $MYVIMRC<CR>
 nnoremap <leader>" viw<esc>a"<esc>bi"<esc>lel"
 
-"Plugins
-call plug#begin('~/.vim/plugged')
-Plug 'sjl/badwolf'
-Plug 'tomasr/molokai'
-Plug 'NLKNguyen/papercolor-theme'
-
-Plug 'tpope/vim-commentary'
-Plug 'tpope/vim-surround'
-Plug 'python-mode/python-mode', { 'branch': 'develop' }
-"Plug 'Valloric/YouCompleteMe'
-call plug#end() "to install new plugins: save vimrc, source vimrc, and run :PlugInstall 
+"shortcuts for closing adjacent windows
+nnoremap <leader>xh <C-w>hZZ
+nnoremap <leader>xj <C-w>jZZ
+nnoremap <leader>xk <C-w>kZZ
+nnoremap <leader>xl <C-w>lZZ
 
 "Colors
 syntax enable
@@ -208,6 +210,9 @@ nnoremap <leader>f :ALEFix<CR>
 
 "TODO: make linting work nicely, tabs for autocomplete, etc.
 "TODO: experiment with different linters, silence warnings, yet.
+"TODO: look into hover definition features (Language Server Protocol??)
 "TODO: gundo-tree, or something like that
 "TODO: fzf
 "TODO: nerdtree, or something like that
+"TODO: vim-fugitive, the other tpope plugins
+"TODO: explore code folding, in python and otherwise
