@@ -60,13 +60,14 @@ Plug 'NLKNguyen/papercolor-theme'
 
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-surround'
+Plug 'python-mode/python-mode', { 'branch': 'develop' }
 "Plug 'Valloric/YouCompleteMe'
 call plug#end() "to install new plugins: save vimrc, source vimrc, and run :PlugInstall 
 
 "Colors
 syntax enable
-set t_Co=256 
-" colorscheme badwolf
+set t_Co=256
+" colorscheme molokai
 set background=dark
 colorscheme PaperColor
 
