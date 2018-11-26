@@ -8,6 +8,9 @@ Plug 'tomasr/molokai'
 Plug 'NLKNguyen/papercolor-theme'
 Plug 'chriskempson/base16-vim'
 
+"vim hardtime
+Plug 'takac/vim-hardtime'
+
 "Utilities
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-surround'
@@ -131,14 +134,21 @@ set hlsearch
 "Key Mappings
 
 "force myself not to use arrow keys
-noremap <up> <nop>
-noremap <down> <nop>
-noremap <left> <nop>
-noremap <right> <nop>
+" noremap <up> <nop>
+" noremap <down> <nop>
+" noremap <left> <nop>
+" noremap <right> <nop>
 
 "moving lines up/down
-noremap - ddp
-noremap _ ddkP
+" noremap - ddp
+" noremap _ ddkP
+
+nnoremap <A-j> :m .+1<CR>==
+nnoremap <A-k> :m .-2<CR>==
+inoremap <A-j> <Esc>:m .+1<CR>==gi
+inoremap <A-k> <Esc>:m .-2<CR>==gi
+vnoremap <A-j> :m '>+1<CR>gv=gv
+vnoremap <A-k> :m '<-2<CR>gv=gv
 
 set mouse=a
 
