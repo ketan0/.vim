@@ -14,9 +14,9 @@ Plug 'takac/vim-hardtime'
 "Utilities
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-surround'
-"Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-fugitive'
 Plug 'jiangmiao/auto-pairs'
-
+Plug '~/.fzf'
 
 "autocomplete/linting
 Plug 'sheerun/vim-polyglot'
@@ -40,7 +40,7 @@ Plug 'w0rp/ale'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 " Plug 'vim-syntastic/syntastic'
-Plug 'python-mode/python-mode'
+Plug 'python-mode/python-mode', { 'branch': 'develop' }
 
 " Plug 'davidhalter/jedi-vim'
 " Plug 'Valloric/YouCompleteMe'
@@ -145,15 +145,16 @@ set hlsearch
 " noremap <right> <nop>
 
 "moving lines up/down
-" noremap - ddp
-" noremap _ ddkP
+noremap - ddp
+noremap _ ddkP
 
-nnoremap <A-j> :m .+1<CR>==
-nnoremap <A-k> :m .-2<CR>==
-inoremap <A-j> <Esc>:m .+1<CR>==gi
-inoremap <A-k> <Esc>:m .-2<CR>==gi
-vnoremap <A-j> :m '>+1<CR>gv=gv
-vnoremap <A-k> :m '<-2<CR>gv=gv
+" these don't work for some reason
+" nnoremap <A-j> :m .+1<CR>==
+" nnoremap <A-k> :m .-2<CR>==
+" inoremap <A-j> <Esc>:m .+1<CR>==gi
+" inoremap <A-k> <Esc>:m .-2<CR>==gi
+" vnoremap <A-j> :m '>+1<CR>gv=gv
+" vnoremap <A-k> :m '<-2<CR>gv=gv
 
 set mouse=a
 
