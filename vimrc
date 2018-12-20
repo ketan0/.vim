@@ -22,7 +22,7 @@ Plug '~/.fzf'
 Plug 'sheerun/vim-polyglot'
 
 " note: if using vim 8, need python 3.5+ (check with vim --version, should
-" show "+python3")
+" show +python3)
 if has('nvim')
   Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
   Plug 'zchee/deoplete-jedi'
@@ -53,6 +53,8 @@ inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 let g:ale_linters = {
 \   'python': ['flake8', 'pylint'] ,
 \}
+
+let g:ale_python_flake8_options = '--ignore=E501,E722'
 
 let g:ale_fixers = {
 \   'python': [
@@ -96,20 +98,6 @@ set t_Co=256
 set background=dark
 colorscheme molokai
 
-" let g:PaperColor_Theme_Options = {
-"   \   'language': {
-"   \     'python': {
-"   \       'highlight_builtins' : 1
-"   \     },
-"   \     'cpp': {
-"   \       'highlight_standard_library': 1
-"   \     },
-"   \     'c': {
-"   \       'highlight_builtins' : 1
-"   \     }
-"   \   }
-"   \ }
-
 "Spaces & Tabs
 set softtabstop=4
 set shiftwidth=4
@@ -139,22 +127,14 @@ set hlsearch
 "Key Mappings
 
 "force myself not to use arrow keys
-" noremap <up> <nop>
-" noremap <down> <nop>
-" noremap <left> <nop>
-" noremap <right> <nop>
+noremap <up> <nop>
+noremap <down> <nop>
+noremap <left> <nop>
+noremap <right> <nop>
 
 "moving lines up/down
 noremap - ddp
 noremap _ ddkP
-
-" these don't work for some reason
-" nnoremap <A-j> :m .+1<CR>==
-" nnoremap <A-k> :m .-2<CR>==
-" inoremap <A-j> <Esc>:m .+1<CR>==gi
-" inoremap <A-k> <Esc>:m .-2<CR>==gi
-" vnoremap <A-j> :m '>+1<CR>gv=gv
-" vnoremap <A-k> :m '<-2<CR>gv=gv
 
 set mouse=a
 
@@ -197,7 +177,6 @@ nnoremap <leader>xl <C-w>lZZ
 "Colors
 syntax enable
 set t_Co=256
-" colorscheme molokai
 set background=dark
 colorscheme PaperColor
 
