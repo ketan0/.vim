@@ -7,6 +7,7 @@ Plug 'sjl/badwolf'
 Plug 'tomasr/molokai'
 Plug 'NLKNguyen/papercolor-theme'
 Plug 'chriskempson/base16-vim'
+Plug 'altercation/vim-colors-solarized'
 
 "vim hardtime
 Plug 'takac/vim-hardtime'
@@ -94,11 +95,6 @@ let g:pymode_rope = 0
 let g:pymode_debug = 0
 let g:pymode_run_bind = '<leader>r'
 
-"Colors
-set t_Co=256 
-set background=dark
-colorscheme molokai
-
 "Spaces & Tabs
 set softtabstop=4
 set shiftwidth=4
@@ -179,7 +175,7 @@ nnoremap <leader>xl <C-w>lZZ
 syntax enable
 set t_Co=256
 set background=dark
-colorscheme PaperColor
+colorscheme solarized
 
 let g:PaperColor_Theme_Options = {
   \   'language': {
