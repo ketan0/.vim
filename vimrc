@@ -18,9 +18,10 @@ Plug 'tpope/vim-fugitive'
 Plug 'jiangmiao/auto-pairs'
 Plug '~/.fzf'
 
-"autocomplete/linting
 Plug 'sheerun/vim-polyglot'
+Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins'}
 
+"autocomplete/linting
 " note: if using vim 8, need python 3.5+ (check with vim --version, should
 " show +python3)
 if has('nvim')
