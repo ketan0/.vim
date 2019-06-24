@@ -1,4 +1,4 @@
-let mapleader=","
+let mapleader="\<Space>"
 
 "Plugins
 call plug#begin('~/.vim/plugged')
@@ -19,7 +19,7 @@ Plug 'tpope/vim-fugitive'
 Plug 'jiangmiao/auto-pairs'
 Plug '~/.fzf'
 
-Plug 'sheerun/vim-polyglot'
+" Plug 'sheerun/vim-polyglot'
 Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins'}
 
 "autocomplete/linting
@@ -34,19 +34,15 @@ else
   Plug 'roxma/vim-hug-neovim-rpc'
 endif
 Plug 'w0rp/ale'
-"NOTE: to get this working on sherlock, you're going to have to monkey around
-"with some python config (i.e., deoplete needs python3 loaded, but some
-"linters for ale may need python2?)
-"
+Plug 'python-mode/python-mode', { 'branch': 'develop' }
+
+
 "note: to look nice, install powerline fonts
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-" Plug 'vim-syntastic/syntastic'
-Plug 'python-mode/python-mode', { 'branch': 'develop' }
-
 " Plug 'davidhalter/jedi-vim'
 " Plug 'Valloric/YouCompleteMe'
-call plug#end() "to install new plugins: save vimrc, source vimrc, and run :PlugInstall 
+call plug#end() "to install new plugins: Plug '<Gitub user/Github repo>', save vimrc, source vimrc, and run :PlugInstall 
 
 "tab completion
 inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
@@ -67,24 +63,18 @@ let g:ale_fixers = {
 \       'yapf',
 \   ],
 \}
-
+" Neovim Python Config
+let g:python3_host_prog = '/home/users/agrawalk/miniconda2/envs/headcam/bin/python'
 
 let g:airline_powerline_fonts = 1
-let g:airline_theme = 'kolor'
+let g:airline_theme = 'solarized'
+let g:airline_solarized_bg='dark'
 let g:airline#extensions#ale#enabled = 1
-
-""old vim-powerline symbols
-"let g:airline_left_sep = '⮀'
-"let g:airline_left_alt_sep = '⮁'
-"let g:airline_right_sep = '⮂'
-"let g:airline_right_alt_sep = '⮃'
-"let g:airline_symbols.branch = '⭠'
-"let g:airline_symbols.readonly = '⭤'
-"let g:airline_symbols.linenr = '⭡'
 
 let g:deoplete#enable_at_startup = 1
 
-let g:pymode_python = 'python'
+let g:pymode_python = 'python3'
+let g:pymode_virtualenv_path = '/home/users/agrawalk/miniconda2/envs/headcam/bin/python'
 let g:pymode_lint = 0  " ALE takes care of this
 let g:pymode_folding = 0  
 let g:pymode_run = 1
@@ -122,6 +112,7 @@ set incsearch
 set hlsearch
 
 "Key Mappings
+noremap <Space> <Nop>
 
 "force myself not to use arrow keys
 noremap <up> <nop>
@@ -195,6 +186,7 @@ nnoremap <leader>n :ALENextWrap<CR>
 nnoremap <leader>p :ALEPreviousWrap<CR>
 nnoremap <leader>f :ALEFix<CR>
 
+"TODO: copy/paste from system buffer nicely
 "TODO: make linting work nicely, tabs for autocomplete, etc.
 "TODO: experiment with different linters, silence warnings, yet.
 "TODO: look into hover definition features (Language Server Protocol??)
