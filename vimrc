@@ -1,4 +1,4 @@
-let mapleader=","
+let mapleader=" "
 
 "Plugins
 call plug#begin('~/.vim/plugged')
@@ -13,13 +13,15 @@ Plug 'altercation/vim-colors-solarized'
 Plug 'takac/vim-hardtime'
 
 "Utilities
+Plug 'kana/vim-textobj-user'
+Plug 'kana/vim-textobj-entire'
+Plug 'nvie/vim-togglemouse'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-fugitive'
 Plug 'jiangmiao/auto-pairs'
 Plug '~/.fzf'
 
-Plug 'sheerun/vim-polyglot'
 Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins'}
 
 "autocomplete/linting
@@ -29,10 +31,12 @@ if has('nvim')
   Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
   Plug 'zchee/deoplete-jedi'
 else
-  Plug 'Shougo/deoplete.nvim'
-  Plug 'roxma/nvim-yarp'
-  Plug 'roxma/vim-hug-neovim-rpc'
+  " Plug 'Shougo/deoplete.nvim'
+  " Plug 'roxma/nvim-yarp'
+  " Plug 'roxma/vim-hug-neovim-rpc'
 endif
+
+Plug 'Vimjas/vim-python-pep8-indent'
 Plug 'w0rp/ale'
 "NOTE: to get this working on sherlock, you're going to have to monkey around
 "with some python config (i.e., deoplete needs python3 loaded, but some
@@ -42,21 +46,29 @@ Plug 'w0rp/ale'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 " Plug 'vim-syntastic/syntastic'
-Plug 'python-mode/python-mode', { 'branch': 'develop' }
+" Plug 'python-mode/python-mode', { 'branch': 'develop' }
 
 " Plug 'davidhalter/jedi-vim'
 " Plug 'Valloric/YouCompleteMe'
 call plug#end() "to install new plugins: save vimrc, source vimrc, and run :PlugInstall 
+
+let g:hardtime_default_on = 1
+let g:list_of_normal_keys = ["h", "j", "k", "l"] 
 
 "tab completion
 inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 
 let g:ale_linters = {
-\   'python': ['flake8', 'pylint'] ,
+\   'python': ['pylint'],
 \}
 
-let g:ale_python_flake8_options = '--ignore=E501,E722'
+" let g:ale_python_pylint_executable = 'python3'
+let g:ale_python_pylint_options = '--rcfile ~/.pylintrc'
+let g:ale_python_pylint_use_global = 0
+
+
+" let g:ale_python_flake8_options = '--ignore=E501,E722'
 
 let g:ale_fixers = {
 \   'python': [
@@ -95,6 +107,8 @@ let g:pymode_rope = 0
 let g:pymode_debug = 0
 let g:pymode_run_bind = '<leader>r'
 
+" Change this
+let g:python3_host_prog = '/Users/ketanagrawal/anaconda2/envs/cs231n/bin/python'
 "Spaces & Tabs
 set softtabstop=4
 set shiftwidth=4
@@ -102,10 +116,12 @@ set expandtab "expand tabs to spaces
 set backspace=indent,eol,start " allow backspacing over everything in insert mode
 
 "UI Config
+set mouse=a "Can click on places, select in visual mode w/ mouse
 syntax enable
 set number
 set showcmd
 set cursorline
+set smartindent
 filetype plugin indent on
 set wildmenu
 set wildignore+=*.jpg,*.bmp,*.gif,*.png,*.jpeg   " binary images
@@ -116,12 +132,20 @@ set title                " change the terminal's title
 set visualbell           " don't beep
 set noerrorbells         " don't beep
 set noshowmode           " let vim-airline display mode instead 
+set encoding=utf-8
 
 "Searching
-set incsearch
-set hlsearch
+set incsearch " Incremental search (jumps to first result)
+set hlsearch " Highlight search
 
 "Key Mappings
+
+"so it behaves like C (c$) and D (d$)
+map Y y$
+
+"For vim-togglemouse
+noremap <F6> :call <SID>ToggleMouse()<CR>
+
 
 "force myself not to use arrow keys
 noremap <up> <nop>
@@ -132,8 +156,6 @@ noremap <right> <nop>
 "moving lines up/down
 noremap - ddp
 noremap _ ddkP
-
-set mouse=a
 
 "jump up/down on long wrapped lines
 nnoremap j gj
@@ -151,19 +173,29 @@ inoremap jk <esc>
 inoremap <c-d> <esc>ddi 
 
 "convenience remappings
-nnoremap ; :
-nnoremap : ;
-vnoremap ; :
-vnoremap : ;
+" nnoremap ; :
+" vnoremap ; :
+" nnoremap : ;
+" vnoremap : ;
+
+"Note: Overwrites native functions for H and L (jump to top and bottom of window)
 nmap H 0
+onoremap H 0
+
 nmap L $
-"Note: H and L native functions are overwritten
+onoremap L $
 
 "Leader Mappings
+
+"Save easily
+nnoremap <leader>w :w!<CR>
+
+"Clear highlights from search
 nnoremap <leader><space> :nohlsearch<CR>
+
+"Edit and source vimrc
 nnoremap <leader>ev :vsplit $MYVIMRC<CR>
-nnoremap <leader>sv :source $MYVIMRC<CR>
-nnoremap <leader>" viw<esc>a"<esc>bi"<esc>lel"
+nnoremap <leader>sv :w<CR>:source $MYVIMRC<CR>
 
 "shortcuts for closing adjacent windows
 nnoremap <leader>xh <C-w>hZZ
@@ -175,7 +207,7 @@ nnoremap <leader>xl <C-w>lZZ
 syntax enable
 set t_Co=256
 set background=dark
-colorscheme solarized
+colorscheme PaperColor
 
 let g:PaperColor_Theme_Options = {
   \   'language': {
@@ -203,3 +235,5 @@ nnoremap <leader>f :ALEFix<CR>
 "TODO: nerdtree, or something like that
 "TODO: vim-fugitive, the other tpope plugins
 "TODO: explore code folding, in python and otherwise
+"TODO: python text objects plugin
+"TODO: make sure this works in normal vim
