@@ -13,6 +13,7 @@ Plug 'altercation/vim-colors-solarized'
 Plug 'takac/vim-hardtime'
 
 "Utilities
+Plug 'easymotion/vim-easymotion'
 Plug 'kana/vim-textobj-user'
 Plug 'kana/vim-textobj-entire'
 Plug 'nvie/vim-togglemouse'
@@ -22,21 +23,23 @@ Plug 'tpope/vim-fugitive'
 Plug 'jiangmiao/auto-pairs'
 Plug '~/.fzf'
 
-Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins'}
-
+if has('nvim')
+    Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins'}
+endif
 "autocomplete/linting
 " note: if using vim 8, need python 3.5+ (check with vim --version, should
 " show +python3)
 if has('nvim')
-  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-  Plug 'zchee/deoplete-jedi'
+    Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+    Plug 'zchee/deoplete-jedi'
 else
-  " Plug 'Shougo/deoplete.nvim'
-  " Plug 'roxma/nvim-yarp'
-  " Plug 'roxma/vim-hug-neovim-rpc'
+    Plug 'Shougo/deoplete.nvim'
+    Plug 'roxma/nvim-yarp'
+    Plug 'roxma/vim-hug-neovim-rpc'
 endif
 
 Plug 'Vimjas/vim-python-pep8-indent'
+Plug 'heavenshell/vim-pydocstring'
 Plug 'w0rp/ale'
 "NOTE: to get this working on sherlock, you're going to have to monkey around
 "with some python config (i.e., deoplete needs python3 loaded, but some
@@ -94,7 +97,7 @@ let g:airline#extensions#ale#enabled = 1
 "let g:airline_symbols.readonly = '⭤'
 "let g:airline_symbols.linenr = '⭡'
 
-let g:deoplete#enable_at_startup = 1
+" let g:deoplete#enable_at_startup = 1
 
 let g:pymode_python = 'python'
 let g:pymode_lint = 0  " ALE takes care of this
@@ -108,13 +111,17 @@ let g:pymode_debug = 0
 let g:pymode_run_bind = '<leader>r'
 
 " Change this
-let g:python3_host_prog = '/Users/ketanagrawal/anaconda2/envs/cs231n/bin/python'
+" Desktop
+" let g:python3_host_prog = '/Users/ketanagrawal/anaconda2/envs/cs231n/bin/python'
+" Sherlock
+let g:python3_host_prog = '/home/users/agrawalk/miniconda2/envs/headcam/bin/python'
 "Spaces & Tabs
 set softtabstop=4
 set shiftwidth=4
 set expandtab "expand tabs to spaces
 set backspace=indent,eol,start " allow backspacing over everything in insert mode
-
+set textwidth=100
+set cc=100
 "UI Config
 set mouse=a "Can click on places, select in visual mode w/ mouse
 syntax enable
@@ -143,9 +150,11 @@ set hlsearch " Highlight search
 "so it behaves like C (c$) and D (d$)
 map Y y$
 
+"For vim-pydocstring
+nmap <leader>d <Plug>(pydocstring)
+
 "For vim-togglemouse
 noremap <F6> :call <SID>ToggleMouse()<CR>
-
 
 "force myself not to use arrow keys
 noremap <up> <nop>
@@ -179,10 +188,10 @@ inoremap <c-d> <esc>ddi
 " vnoremap : ;
 
 "Note: Overwrites native functions for H and L (jump to top and bottom of window)
-nmap H 0
+nnoremap H 0
 onoremap H 0
 
-nmap L $
+nnoremap L $
 onoremap L $
 
 "Leader Mappings
@@ -191,7 +200,7 @@ onoremap L $
 nnoremap <leader>w :w!<CR>
 
 "Clear highlights from search
-nnoremap <leader><space> :nohlsearch<CR>
+nnoremap <leader>, :nohlsearch<CR>
 
 "Edit and source vimrc
 nnoremap <leader>ev :vsplit $MYVIMRC<CR>
